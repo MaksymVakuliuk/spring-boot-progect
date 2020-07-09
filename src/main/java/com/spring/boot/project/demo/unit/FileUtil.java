@@ -1,5 +1,6 @@
 package com.spring.boot.project.demo.unit;
 
+import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,5 +15,12 @@ public class FileUtil implements FileReader {
     public List<String> readLines(String path) {
         Path filePath = Paths.get(path);
         return Files.readAllLines(filePath);
+    }
+
+    @SneakyThrows
+    @Override
+    public BufferedReader getBufferReader(String path) {
+        Path filePath = Paths.get(path);
+        return Files.newBufferedReader(filePath);
     }
 }
