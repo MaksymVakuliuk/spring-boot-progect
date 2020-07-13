@@ -10,13 +10,13 @@ public class FileUtilTest {
     private final FileReader fileReader = new FileUtil();
     private static final String LINES_TEST_FILE_PATH
             = "/home/max5akul/MateAcademy/spring-boot/src/test/resources"
-            + "/tests/fileUtilTest/lines-for-test.txt";
+            + "/tests/utilTest/lines-for-test.txt";
     private static final String LINES_TEST_CSV_FILE_PATH
             = "/home/max5akul/MateAcademy/spring-boot/src/test/resources"
-            + "/tests/fileUtilTest/lines-for-test.csv";
+            + "/tests/utilTest/lines-for-test.csv";
     private static final String EMPTY_TEST_FILE_PATH
             = "/home/max5akul/MateAcademy/spring-boot/src/test/resources"
-            + "/tests/fileUtilTest/empty-file-test.txt";
+            + "/tests/utilTest/empty-file-test.txt";
 
     @Test
     public void readLines() {
