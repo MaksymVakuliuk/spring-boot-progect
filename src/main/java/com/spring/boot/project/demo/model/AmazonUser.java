@@ -8,11 +8,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "AmazonUser")
+@Table(name = "amazonUser")
 public class AmazonUser {
     @Id
-    @Column(name = "UserId", unique = true, nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
-    @Column(name = "ProfileName", unique = true, nullable = false)
+    @Column(name = "profile_name", unique = true, nullable = false)
     private String profileName;
 }
