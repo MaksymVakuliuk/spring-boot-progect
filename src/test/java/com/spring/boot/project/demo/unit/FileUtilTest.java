@@ -9,11 +9,11 @@ import static org.junit.Assert.assertTrue;
 public class FileUtilTest {
     private final FileReader fileReader = new FileUtil();
     private static final String LINES_TEST_FILE_PATH
-            = "src/test/resources/tests/utilTest/lines-for-test.txt";
+            = "src/test/resources/tests/util/lines-for-test.txt";
     private static final String LINES_TEST_CSV_FILE_PATH
-            = "src/test/resources/tests/utilTest/lines-for-test.csv";
+            = "src/test/resources/tests/util/lines-for-test.csv";
     private static final String EMPTY_TEST_FILE_PATH
-            = "src/test/resources/tests/utilTest/empty-file-test.txt";
+            = "src/test/resources/tests/util/empty-file-test.txt";
 
     @Test
     public void readLines() {

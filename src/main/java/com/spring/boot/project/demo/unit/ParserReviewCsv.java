@@ -43,26 +43,29 @@ public class ParserReviewCsv implements Parser {
             } catch (IOException ioException) {
                 throw new RuntimeException("Can't get CSVRecords from CSVParser:  ", ioException);
             }
-            Review review = new Review();
-            AmazonUser amazonUser = new AmazonUser();
-            amazonUser.setUserId(record.get(USER_ID));
-            amazonUser.setProfileName(record.get(PROFILE_NAME));
-            review.setAmazonUser(amazonUser);
-            Product product = new Product();
-            product.setProductId(record.get(PRODUCT_ID));
-            review.setProduct(product);
-            review.setHelpfulnessNumerator(
-                    Integer.parseInt(record.get(HELPFULNESS_NUMERATOR)));
-            review.setHelpfulnessDenominator(
-                    Integer.parseInt(record.get(HELPFULNESS_DENOMINATOR)));
-            review.setScore(Integer.parseInt(record.get(SCORE)));
-            review.setTime(LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(
-                            Long.parseLong(record.get(TIME))), ZoneId.systemDefault()));
-            review.setSummary(record.get(SUMMARY));
-            review.setText(record.get(TEXT));
-            reviewList.add(review);
+            reviewList.add(getReviewFromRecord(record));
         }
         return reviewList;
+    }
+
+    private Review getReviewFromRecord(CSVRecord record) {
+        Review review = new Review();
+        AmazonUser amazonUser = new AmazonUser();
+        amazonUser.setUserId(record.get(USER_ID));
+        amazonUser.setProfileName(record.get(PROFILE_NAME));
+        review.setAmazonUser(amazonUser);
+        Product product = new Product();
+        product.setProductId(record.get(PRODUCT_ID));
+        review.setProduct(product);
+        review.setHelpfulnessNumerator(
+                Integer.parseInt(record.get(HELPFULNESS_NUMERATOR)));
+        review.setHelpfulnessDenominator(
+                Integer.parseInt(record.get(HELPFULNESS_DENOMINATOR)));
+        review.setScore(Integer.parseInt(record.get(SCORE)));
+        review.setTime(LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(Long.parseLong(record.get(TIME))), ZoneId.systemDefault()));
+        review.setSummary(record.get(SUMMARY));
+        review.setText(record.get(TEXT));
+        return review;
     }
 }

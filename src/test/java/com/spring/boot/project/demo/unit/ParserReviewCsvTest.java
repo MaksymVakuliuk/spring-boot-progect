@@ -14,13 +14,13 @@ public class ParserReviewCsvTest {
     private final FileReader fileReader = new FileUtil();
     private final Parser parsedReviewParser = new ParserReviewCsv();
     private final static String REVIEW_TEST_PATH =
-            "src/test/resources/tests/utilTest/reviews_test.csv";
+            "src/test/resources/tests/util/reviews_test.csv";
     private final static String EMPTY_REVIEW_TEST_PATH =
-            "src/test/resources/tests/utilTest/empty_reviews_test.csv";
+            "src/test/resources/tests/util/empty_reviews_test.csv";
 
     @Test
     public void parseCsvLinesOfEmptyFile() {
-        List<String> readLines = new FileUtil().readLines(EMPTY_REVIEW_TEST_PATH);
+        List<String> readLines = fileReader.readLines(EMPTY_REVIEW_TEST_PATH);
         Assert.assertTrue(parsedReviewParser.parse(readLines).isEmpty());
     }
 
@@ -41,8 +41,7 @@ public class ParserReviewCsvTest {
                 Instant.ofEpochMilli(
                         1303862400L), ZoneId.systemDefault()));
         expectedReview1.setSummary("Good Quality Dog Food");
-        expectedReview1
-                .setText("Review 1 text.");
+        expectedReview1.setText("Review 1 text.");
         Review expectedReview2 = new Review();
         AmazonUser amazonUser2 = new AmazonUser();
         amazonUser2.setUserId("A1D87F6ZCVE5NK");
@@ -55,11 +54,9 @@ public class ParserReviewCsvTest {
         expectedReview2.setHelpfulnessDenominator(0);
         expectedReview2.setScore(1);
         expectedReview2.setTime(LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(
-                        1346976000L), ZoneId.systemDefault()));
+                Instant.ofEpochMilli(1346976000L), ZoneId.systemDefault()));
         expectedReview2.setSummary("Not as Advertised");
-        expectedReview2
-                .setText("Review 2 text.");
+        expectedReview2.setText("Review 2 text.");
         List<Review> expectedReviewsList = List.of(expectedReview1, expectedReview2);
         Assert.assertEquals(expectedReviewsList,
                 parsedReviewParser.parse(fileReader.readLines(REVIEW_TEST_PATH)));
