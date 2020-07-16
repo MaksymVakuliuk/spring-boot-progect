@@ -15,7 +15,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ParserReviewCsv implements Parser {
+public class ParserReviewCsv implements Parser<Review> {
     private static final int PRODUCT_ID = 1;
     private static final int USER_ID = 2;
     private static final int PROFILE_NAME = 3;
