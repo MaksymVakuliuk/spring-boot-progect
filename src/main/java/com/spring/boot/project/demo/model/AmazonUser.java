@@ -13,6 +13,6 @@ public class AmazonUser {
     @Id
     @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
-    @Column(name = "profile_name", unique = true, nullable = false)
+    @Column(name = "profile_name", nullable = false)
     private String profileName;
 }
