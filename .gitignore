@@ -1,14 +1,14 @@
 HELP.md
 target/
-**/src/main/resources/csv/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+**/src/main/resources/csv
 
 ### STS ###
 .apt_generated
 .classpath
-.factorypath
+.factorypathq
 .project
 .settings
 .springBeans
