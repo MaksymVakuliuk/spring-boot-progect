@@ -24,16 +24,16 @@ public class Review {
     private AmazonUser amazonUser;
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
-    @Column(name = "helpfulness_numerator", unique = true, nullable = false)
+    @Column(name = "helpfulness_numerator", nullable = false)
     private int helpfulnessNumerator;
-    @Column(name = "helpfulness_nenominator", unique = true, nullable = false)
+    @Column(name = "helpfulness_nenominator", nullable = false)
     private int helpfulnessDenominator;
-    @Column(name = "score", unique = true, nullable = false)
+    @Column(name = "score", nullable = false)
     private int score;
     @Column(name = "time", nullable = false)
     private LocalDateTime time;
     @Column(name = "tummary", nullable = false)
     private String summary;
-    @Column(name = "text", nullable = false)
+    @Column(name = "text", nullable = false, length = 50000, columnDefinition = "text")
     private String text;
 }

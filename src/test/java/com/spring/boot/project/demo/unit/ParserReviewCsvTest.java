@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class ParserReviewCsvTest {
     private final FileReader fileReader = new FileUtil();
-    private final Parser parsedReviewParser = new ParserReviewCsv();
+    private final Parser<Review> parsedReviewParser = new ParserReviewCsv();
     private final static String REVIEW_TEST_PATH =
             "src/test/resources/tests/util/reviews_test.csv";
     private final static String EMPTY_REVIEW_TEST_PATH =

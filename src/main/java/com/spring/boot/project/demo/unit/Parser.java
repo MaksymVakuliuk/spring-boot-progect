@@ -2,6 +2,6 @@ package com.spring.boot.project.demo.unit;
 
 import java.util.List;
 
-public interface Parser {
-    List<?> parse(List<String> reviews);
+public interface Parser<T> {
+    List<T> parse(List<String> reviews);
 }
