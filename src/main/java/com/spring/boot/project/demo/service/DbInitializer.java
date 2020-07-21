@@ -1,5 +1,5 @@
 package com.spring.boot.project.demo.service;
 
-public interface DbInitializer<T> {
+public interface DbInitializer {
     void initializeDb(String dataFilePath);
 }
