@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class InjectController {
-    private static final String REVIEWS_CSV_FILE_PATH = "src/main/resources/csv/Reviews.csv";
+    private static final String REVIEWS_CSV_FILE_PATH
+            = "src/test/resources/tests/util/reviews_test.csv";
     private final UsersRoleRepository usersRoleRepository;
     private final DbInitializer dbInitializer;
 
