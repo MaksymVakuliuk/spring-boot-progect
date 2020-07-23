@@ -32,7 +32,7 @@ public class Review {
     private int score;
     @Column(name = "time", nullable = false)
     private LocalDateTime time;
-    @Column(name = "tummary", nullable = false)
+    @Column(name = "summary", nullable = false)
     private String summary;
     @Column(name = "text", nullable = false, length = 50000, columnDefinition = "text")
     private String text;
