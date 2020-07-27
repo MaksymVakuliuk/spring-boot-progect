@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProductRepository extends JpaRepository<Product, String> {
     @Query("select p from Product p "
-            + "order by size(p.reviews) desc")
-    List<Product> getMostCommentedProduct(Pageable pageable);
+            + "order by size(p.reviews) desc, p.productId")
+    List<Product> findMostCommentedProduct(Pageable pageable);
 }

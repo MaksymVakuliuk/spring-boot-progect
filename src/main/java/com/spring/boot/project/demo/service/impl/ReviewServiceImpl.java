@@ -42,10 +42,12 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewsList;
     }
 
+    @Override
     public Review findById(Long id) {
         return reviewRepository.findById(id).orElseThrow();
     }
 
+    @Override
     public List<Review> findAll() {
         return reviewRepository.findAll();
     }
@@ -94,5 +96,29 @@ public class ReviewServiceImpl implements ReviewService {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
         return mostUsedWords;
+    }
+
+    @Override
+    public Set<Review> getReviewsSetOfProduct(String productId) {
+        List<Review> byProductId = reviewRepository.findByProduct_ProductId(productId);
+        return byProductId.stream()
+                .map(review -> {
+                    review.setProduct(null);
+                    review.getAmazonUser().setReviews(null);
+                    return review;
+                })
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Review> getReviewSetOfAmazonUser(String userId) {
+        List<Review> byAmazonUserId = reviewRepository.findByAmazonUser_UserId(userId);
+        return byAmazonUserId.stream()
+                .map(review -> {
+                    review.setAmazonUser(null);
+                    review.getProduct().setReviews(null);
+                    return review;
+                })
+                .collect(Collectors.toSet());
     }
 }
