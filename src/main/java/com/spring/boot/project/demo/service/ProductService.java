@@ -4,5 +4,5 @@ import com.spring.boot.project.demo.model.Product;
 import java.util.List;
 
 public interface ProductService extends GenericService<Product, String> {
-    List<Product> getMostCommentedProduct(int numberOfProducts);
+    List<Product> findMostCommentedProduct(int numberOfProducts);
 }

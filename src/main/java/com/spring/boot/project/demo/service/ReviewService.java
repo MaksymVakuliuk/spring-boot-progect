@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface ReviewService extends GenericService<Review, Long> {
-    List<String> getMostUsedWords(int numberOfWords);
+    List<String> findMostUsedWords(int numberOfWords);
 
-    Set<Review> getReviewsSetOfProduct(String productId);
+    Set<Review> findReviewsSetOfProduct(String productId);
 
-    Set<Review> getReviewSetOfAmazonUser(String userId);
+    Set<Review> findReviewSetOfAmazonUser(String userId);
 }

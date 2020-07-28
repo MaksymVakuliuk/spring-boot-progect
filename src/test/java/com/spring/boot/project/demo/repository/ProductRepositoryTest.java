@@ -20,6 +20,6 @@ public class ProductRepositoryTest {
     @Test
     public void getMostCommentedProduct() {
         List<Product> mostCommentedProduct = productRepository.findMostCommentedProduct(PageRequest.of(0, 1));
-        assertEquals("product1", mostCommentedProduct.stream().map(product -> product.getProductId()).collect(Collectors.joining(", ")));
+        assertEquals("product1", mostCommentedProduct.stream().map(Product::getProductId).collect(Collectors.joining(", ")));
     }
 }

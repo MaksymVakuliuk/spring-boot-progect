@@ -81,7 +81,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<String> getMostUsedWords(int numberOfWords) {
+    public List<String> findMostUsedWords(int numberOfWords) {
         List<String> allWords = reviewRepository.getAllText()
                 .stream()
                 .flatMap(text -> Arrays.stream(text.toLowerCase().split("[^a-z]+")))
@@ -93,13 +93,14 @@ public class ReviewServiceImpl implements ReviewService {
         List<String> mostUsedWords = numberOfWord.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .limit(numberOfWords)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
         return mostUsedWords;
     }
 
     @Override
-    public Set<Review> getReviewsSetOfProduct(String productId) {
+    public Set<Review> findReviewsSetOfProduct(String productId) {
         List<Review> byProductId = reviewRepository.findByProduct_ProductId(productId);
         return byProductId.stream()
                 .map(review -> {
@@ -111,7 +112,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Set<Review> getReviewSetOfAmazonUser(String userId) {
+    public Set<Review> findReviewSetOfAmazonUser(String userId) {
         List<Review> byAmazonUserId = reviewRepository.findByAmazonUser_UserId(userId);
         return byAmazonUserId.stream()
                 .map(review -> {

@@ -21,6 +21,6 @@ public class AmazonUserRepositoryTest {
     public void getMostActiveUsers() {
         String expectedUsers = "user1, user2";
         List<AmazonUser> mostActiveUsers = amazonUserRepository.findMostActiveUsers(PageRequest.of(0, 2));
-        assertEquals(expectedUsers, mostActiveUsers.stream().map(user -> user.getUserId()).collect(Collectors.joining(", ")));
+        assertEquals(expectedUsers, mostActiveUsers.stream().map(AmazonUser::getUserId).collect(Collectors.joining(", ")));
     }
 }
