@@ -54,7 +54,7 @@ public class AmazonUserServiceImpl implements AmazonUserService {
     }
 
     @Override
-    public List<AmazonUser> getMostActiveUsers(int numberOfAmazonUsers) {
-        return amazonUserRepository.getMostActiveUsers(PageRequest.of(0, numberOfAmazonUsers));
+    public List<AmazonUser> findMostActiveUsers(int numberOfAmazonUsers) {
+        return amazonUserRepository.findMostActiveUsers(PageRequest.of(0, numberOfAmazonUsers));
     }
 }

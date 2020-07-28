@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getMostCommentedProduct(int numberOfProducts) {
-        return productRepository.getMostCommentedProduct(PageRequest.of(0, numberOfProducts));
+    public List<Product> findMostCommentedProduct(int numberOfProducts) {
+        return productRepository.findMostCommentedProduct(PageRequest.of(0, numberOfProducts));
     }
 }

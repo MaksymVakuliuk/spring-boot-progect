@@ -13,8 +13,8 @@ import org.junit.Test;
 public class ParserReviewCsvTest {
     private final FileReader fileReader = new FileUtil();
     private final Parser<Review> parsedReviewParser = new ParserReviewCsv();
-    private final static String REVIEW_TEST_PATH =
-            "src/test/resources/tests/util/reviews_test.csv";
+    private final static String EXPECTED_PARSER_REVIEW_TEST_PATH =
+            "src/test/resources/tests/util/expected_parser_reviews_test.csv";
     private final static String EMPTY_REVIEW_TEST_PATH =
             "src/test/resources/tests/util/empty_reviews_test.csv";
 
@@ -59,6 +59,6 @@ public class ParserReviewCsvTest {
         expectedReview2.setText("Review 2 text.");
         List<Review> expectedReviewsList = List.of(expectedReview1, expectedReview2);
         Assert.assertEquals(expectedReviewsList,
-                parsedReviewParser.parse(fileReader.readLines(REVIEW_TEST_PATH)));
+                parsedReviewParser.parse(fileReader.readLines(EXPECTED_PARSER_REVIEW_TEST_PATH)));
     }
 }
