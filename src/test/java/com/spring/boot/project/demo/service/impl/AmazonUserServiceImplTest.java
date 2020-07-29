@@ -23,7 +23,6 @@ public class AmazonUserServiceImplTest {
     private AmazonUserRepository amazonUserRepository;
     @InjectMocks
     private AmazonUserServiceImpl amazonUserServiceImpl;
-
     private List<AmazonUser> amazonUserList;
 
     @Before

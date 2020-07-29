@@ -1,6 +1,7 @@
 package com.spring.boot.project.demo.dto.review;
 
 import com.spring.boot.project.demo.dto.amazonuser.AmazonUserMapper;
+import com.spring.boot.project.demo.dto.product.ProductMapper;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,8 @@ public class ReviewMapper {
         reviewFromDbDto.setId(review.getId());
         reviewFromDbDto.setAmazonUserDto(new AmazonUserMapper()
                 .convertToAmazonUserDto(review.getAmazonUser()));
-        reviewFromDbDto.setProductId(review.getProduct().getProductId());
+        reviewFromDbDto
+                .setProductDto(new ProductMapper().convertToAmazonUserDto(review.getProduct()));
         reviewFromDbDto.setHelpfulnessNumerator(review.getHelpfulnessNumerator());
         reviewFromDbDto.setHelpfulnessDenominator(review.getHelpfulnessDenominator());
         reviewFromDbDto.setScore(review.getScore());

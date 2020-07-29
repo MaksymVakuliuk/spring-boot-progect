@@ -15,7 +15,7 @@ public class ReviewRepositoryTest {
 
     @Test
     public void getAllText() {
-        String expectedText = "[Review 1 text., Review 2 text., Review 3 text., Review 4 text., Review 5 text.]";
+        String expectedText = "[Review 1 text. First., Review 2 text. Second. Second., Review 3 text. Third., Review 4 text. Fourth., Review 5 text. Fifth.]";
         assertEquals(expectedText, reviewRepository.getAllText().toString());
     }
 

@@ -21,10 +21,8 @@ import static org.junit.Assert.assertEquals;
 public class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
-
     @InjectMocks
     private ProductServiceImpl productServiceImpl;
-
     private List<Product> productList;
 
     @Before

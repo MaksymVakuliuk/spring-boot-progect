@@ -28,6 +28,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 public class ReviewServiceImplTest {
+    private final List<String> EXPECTED_MOST_USED_WORDS = List.of("review", "text");
     @Mock
     private ReviewRepository reviewRepository;
     @Mock
@@ -38,7 +39,6 @@ public class ReviewServiceImplTest {
     private ReviewServiceImpl reviewServiceImpl;
     private List<Review> reviewList;
     private List<String> allText;
-    private final List<String> expectedMostUsedWords = List.of("review", "text");
 
     @Before
     public void setup() {
@@ -79,11 +79,11 @@ public class ReviewServiceImplTest {
         review2.setSummary("Good summary");
         review2.setText("Review 2 text.");
         reviewList.add(review2);
-        allText = List.of("Review 1 text.",
-                "Review 2 text. First.",
-                "Review 3 text. Second.",
-                "Review 4 text. Third.",
-                "Review 5 text. Fourth.");
+        allText = List.of("Review 1 text. First. ",
+                "Review 2 text. Second second.",
+                "Review 3 text. Third.",
+                "Review 4 text. Fourth.",
+                "Review 5 text. Fifth.");
     }
 
     @Test
@@ -120,7 +120,7 @@ public class ReviewServiceImplTest {
     public void findMostUsedWords() {
         Mockito.when(reviewRepository.getAllText()).thenReturn(allText);
         List<String> mostUsedWords = reviewServiceImpl.findMostUsedWords(2);
-        assertEquals(expectedMostUsedWords, mostUsedWords);
+        assertEquals(EXPECTED_MOST_USED_WORDS , mostUsedWords);
     }
 
     @Test
