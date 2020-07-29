@@ -38,7 +38,9 @@ public class ReviewServiceImpl implements ReviewService {
             amazonUserSet.add(review.getAmazonUser());
             productSet.add(review.getProduct());
         }
-        addDataToDatabase(amazonUserSet, reviewsList, productSet);
+        amazonUserRepository.saveAll(amazonUserSet);
+        productRepository.saveAll(productSet);
+        reviewRepository.saveAll(reviewsList);
         return reviewsList;
     }
 
@@ -70,14 +72,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteAll(Iterable<Review> iterable) {
         reviewRepository.deleteAll(iterable);
-    }
-
-    private void addDataToDatabase(Iterable<AmazonUser> amazonUsers,
-                                   Iterable<Review> reviews,
-                                   Iterable<Product> products) {
-        amazonUserRepository.saveAll(amazonUsers);
-        productRepository.saveAll(products);
-        reviewRepository.saveAll(reviews);
     }
 
     @Override

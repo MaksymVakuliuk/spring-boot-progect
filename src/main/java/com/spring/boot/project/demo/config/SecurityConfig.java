@@ -8,10 +8,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin();
-        http.authorizeRequests()
-                .anyRequest().authenticated();
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+        http.formLogin()
+                .and()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .csrf().disable()
+                .headers().frameOptions().disable();
     }
 }

@@ -2,7 +2,7 @@ package com.spring.boot.project.demo.service;
 
 import java.util.List;
 
-public interface GenericService<T,I> {
+public interface GenericService<T, I> {
     T save(T t);
 
     List<T> saveAll(List<T> listT);

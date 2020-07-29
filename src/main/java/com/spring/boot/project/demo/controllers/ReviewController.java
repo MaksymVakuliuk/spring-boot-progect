@@ -4,8 +4,8 @@ import com.spring.boot.project.demo.service.ReviewService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReviewController {
     private final ReviewService reviewService;
 
-    @GetMapping("/mostusedwords/{numberOfWords}")
-    public List<String> getMostUsedWords(@PathVariable int numberOfWords) {
+    @GetMapping("/mostusedwords")
+    public List<String> getMostUsedWords(@RequestParam(defaultValue = "1000") int numberOfWords) {
         return reviewService.findMostUsedWords(numberOfWords);
     }
 }

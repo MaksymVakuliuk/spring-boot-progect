@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(ReviewController.class)
 public class ReviewControllerTest {
-    private static final String REQUEST = "/reviews/mostusedwords/{numberOfWords}";
+    private static final String REQUEST = "/reviews/mostusedwords";
     private static final List<String> EXPECTED_MOST_USED_WORDS = List.of("review", "text");
     @MockBean
     private ReviewService reviewService;
@@ -32,7 +32,7 @@ public class ReviewControllerTest {
     @WithMockUser(username = "admin", password = "pass")
     public void getMostCommentedProduct() throws Exception {
         Mockito.when(reviewService.findMostUsedWords(2)).thenReturn(EXPECTED_MOST_USED_WORDS);
-        mockMvc.perform(get(REQUEST, 2))
+        mockMvc.perform(get(REQUEST).param("numberOfWords", "2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))

@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(AmazonUserController.class)
 public class AmazonUserControllerTest {
-    private static final String REQUEST = "/amazonusers/mostactive/{numberOfAmazonUsers}";
+    private static final String REQUEST = "/amazonusers/mostactive";
     @MockBean
     private AmazonUserService amazonUserService;
     @MockBean
@@ -57,7 +57,7 @@ public class AmazonUserControllerTest {
                 .thenReturn(amazonUserDto1);
         Mockito.when(amazonUserMapper.convertToAmazonUserDto(amazonUserList.get(1)))
                 .thenReturn(amazonUserDto2);
-        mockMvc.perform(MockMvcRequestBuilders.get(REQUEST, 2))
+        mockMvc.perform(MockMvcRequestBuilders.get(REQUEST).param("numberOfAmazonUsers", "2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))

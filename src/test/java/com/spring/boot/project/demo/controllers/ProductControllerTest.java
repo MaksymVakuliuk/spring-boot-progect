@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
 public class ProductControllerTest {
-    private static final String REQUEST = "/products/mostcommented/{numberOfProducts}";
+    private static final String REQUEST = "/products/mostcommented";
     @MockBean
     private ProductService productService;
     @MockBean
@@ -50,7 +50,7 @@ public class ProductControllerTest {
         Mockito.when(productService.findMostCommentedProduct(2)).thenReturn(productList);
         Mockito.when(productMapper.convertToAmazonUserDto(product1)).thenReturn(productDto1);
         Mockito.when(productMapper.convertToAmazonUserDto(product2)).thenReturn(productDto2);
-        mockMvc.perform(get(REQUEST, 2))
+        mockMvc.perform(get(REQUEST).param("numberOfProducts", "2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))

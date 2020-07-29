@@ -1,5 +1,7 @@
 package com.spring.boot.project.demo.repository;
 
+import com.spring.boot.project.demo.service.DbService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,26 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ReviewRepositoryTest {
+    private static final String REVIEWS_CSV_FILE_PATH
+            = "src/test/resources/tests/util/reviews_test.csv";
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private DbService dbService;
+
+    @Before
+    public void setup() {
+        dbService.clearDb();
+        dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
+    }
 
     @Test
     public void getAllText() {
-        String expectedText = "[Review 1 text. First., Review 2 text. Second. Second., Review 3 text. Third., Review 4 text. Fourth., Review 5 text. Fifth.]";
+        String expectedText = "[Review 1 text. First., " +
+                "Review 2 text. Second. Second., " +
+                "Review 3 text. Third., " +
+                "Review 4 text. Fourth., " +
+                "Review 5 text. Fifth.]";
         assertEquals(expectedText, reviewRepository.getAllText().toString());
     }
 
