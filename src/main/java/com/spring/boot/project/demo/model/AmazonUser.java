@@ -1,8 +1,10 @@
 package com.spring.boot.project.demo.model;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 
@@ -15,4 +17,6 @@ public class AmazonUser {
     private String userId;
     @Column(name = "profile_name", nullable = false)
     private String profileName;
+    @OneToMany(mappedBy = "amazonUser")
+    private Set<Review> reviews;
 }

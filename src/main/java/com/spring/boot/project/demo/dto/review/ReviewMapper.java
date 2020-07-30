@@ -1,25 +1,31 @@
 package com.spring.boot.project.demo.dto.review;
 
 import com.spring.boot.project.demo.dto.amazonuser.AmazonUserMapper;
+import com.spring.boot.project.demo.dto.product.ProductMapper;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class ReviewMapper {
+    private AmazonUserMapper amazonUserMapper;
+    private ProductMapper productMapper;
+
     public ReviewFromDbDto convertToReviewFromDbDto(Review review) {
         ReviewFromDbDto reviewFromDbDto = new ReviewFromDbDto();
         reviewFromDbDto.setId(review.getId());
-        reviewFromDbDto.setAmazonUserDto(new AmazonUserMapper()
+        reviewFromDbDto.setAmazonUserDto(amazonUserMapper
                 .convertToAmazonUserDto(review.getAmazonUser()));
-        reviewFromDbDto.setProductId(review.getProduct().getProductId());
+        reviewFromDbDto
+                .setProductDto(productMapper.convertToAmazonUserDto(review.getProduct()));
         reviewFromDbDto.setHelpfulnessNumerator(review.getHelpfulnessNumerator());
         reviewFromDbDto.setHelpfulnessDenominator(review.getHelpfulnessDenominator());
         reviewFromDbDto.setScore(review.getScore());
         reviewFromDbDto.setTime(review.getTime());
         reviewFromDbDto.setSummary(review.getSummary());
         reviewFromDbDto.setText(review.getText());
-
         return reviewFromDbDto;
     }
 
