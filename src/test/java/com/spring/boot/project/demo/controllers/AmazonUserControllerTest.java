@@ -1,5 +1,9 @@
 package com.spring.boot.project.demo.controllers;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.spring.boot.project.demo.dto.amazonuser.AmazonUserDto;
 import com.spring.boot.project.demo.dto.amazonuser.AmazonUserMapper;
 import com.spring.boot.project.demo.model.AmazonUser;
@@ -18,9 +22,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AmazonUserController.class)
@@ -35,7 +36,7 @@ public class AmazonUserControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "pass")
-    public void getMostActiveUserTest() throws Exception{
+    public void getMostActiveUserTest() throws Exception {
         AmazonUser amazonUser1 = new AmazonUser();
         amazonUser1.setUserId("userId1");
         amazonUser1.setProfileName("user1");

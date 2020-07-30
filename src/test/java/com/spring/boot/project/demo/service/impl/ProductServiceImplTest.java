@@ -1,5 +1,7 @@
 package com.spring.boot.project.demo.service.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.repository.ProductRepository;
 import java.util.ArrayList;
@@ -14,7 +16,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
