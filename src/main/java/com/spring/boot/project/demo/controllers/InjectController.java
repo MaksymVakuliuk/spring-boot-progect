@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +23,7 @@ public class InjectController {
         insertRoles();
     }
 
-    @RequestMapping("/injectreviewstodb")
+    @GetMapping("/injectreviewstodb")
     public String insertReviewsToDb() {
         dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
         return "Success inject data to db.";
