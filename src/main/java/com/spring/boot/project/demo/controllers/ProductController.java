@@ -3,6 +3,7 @@ package com.spring.boot.project.demo.controllers;
 import com.spring.boot.project.demo.dto.product.ProductDto;
 import com.spring.boot.project.demo.dto.product.ProductMapper;
 import com.spring.boot.project.demo.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,8 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
 
+    @ApiOperation(value = "Finding most commented food items.",
+            notes = "Default numbers of food items to find is 1000.")
     @GetMapping("/mostcommented")
     public List<ProductDto> getMostCommentedProduct(
             @RequestParam(defaultValue = "1000") int numberOfProducts) {

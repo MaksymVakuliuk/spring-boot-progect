@@ -3,6 +3,7 @@ package com.spring.boot.project.demo.controllers;
 import com.spring.boot.project.demo.model.UsersRole;
 import com.spring.boot.project.demo.repository.UsersRoleRepository;
 import com.spring.boot.project.demo.service.DbService;
+import io.swagger.annotations.ApiOperation;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
@@ -23,6 +24,7 @@ public class InjectController {
         insertRoles();
     }
 
+    @ApiOperation(value = "Inserting data from data to DB.")
     @GetMapping("/injectreviewstodb")
     public String insertReviewsToDb() {
         dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
