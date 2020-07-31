@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/amazonusers")
+@RequestMapping("/amazon-users")
 @AllArgsConstructor
 public class AmazonUserController {
     private final AmazonUserService amazonUserService;
@@ -21,7 +21,7 @@ public class AmazonUserController {
 
     @ApiOperation(value = "Finding most active users.",
             notes = "Default number of amazon users to find is 1000.")
-    @GetMapping("/mostactive")
+    @GetMapping("/most-active-users")
     public List<AmazonUserDto> getMostActiveUser(
             @RequestParam(defaultValue = "1000") int numberOfAmazonUsers) {
         return amazonUserService.findMostActiveUsers(numberOfAmazonUsers).stream()

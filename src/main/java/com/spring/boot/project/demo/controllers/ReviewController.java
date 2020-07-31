@@ -17,7 +17,7 @@ public class ReviewController {
 
     @ApiOperation(value = "Finding most used words in reviews.",
             notes = "Default numbers of words to find is 1000.")
-    @GetMapping("/mostusedwords")
+    @GetMapping("/most-used-words")
     public List<String> getMostUsedWords(@RequestParam(defaultValue = "1000") int numberOfWords) {
         return reviewService.findMostUsedWords(numberOfWords);
     }

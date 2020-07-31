@@ -3,6 +3,7 @@ package com.spring.boot.project.demo.service.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import com.google.common.collect.ImmutableList;
 import com.spring.boot.project.demo.model.AmazonUser;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
@@ -29,7 +30,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 public class ReviewServiceImplTest {
-    private static final List<String> EXPECTED_MOST_USED_WORDS = List.of("review", "text");
+    private static final ImmutableList<String> EXPECTED_MOST_USED_WORDS
+            = ImmutableList.of("review", "text");
     @Mock
     private ReviewRepository reviewRepository;
     @Mock

@@ -21,7 +21,7 @@ public class ProductController {
 
     @ApiOperation(value = "Finding most commented food items.",
             notes = "Default numbers of food items to find is 1000.")
-    @GetMapping("/mostcommented")
+    @GetMapping("/most-commented-products")
     public List<ProductDto> getMostCommentedProduct(
             @RequestParam(defaultValue = "1000") int numberOfProducts) {
         return productService.findMostCommentedProduct(numberOfProducts).stream()

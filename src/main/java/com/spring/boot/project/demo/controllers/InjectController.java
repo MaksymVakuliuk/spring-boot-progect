@@ -25,7 +25,7 @@ public class InjectController {
     }
 
     @ApiOperation(value = "Inserting data from data to DB.")
-    @GetMapping("/injectreviewstodb")
+    @GetMapping("/inject-reviews-to-db")
     public String insertReviewsToDb() {
         dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
         return "Success inject data to db.";
