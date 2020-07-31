@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @RunWith(SpringRunner.class)
 @WebMvcTest(AmazonUserController.class)
 public class AmazonUserControllerTest {
-    private static final String REQUEST = "/amazonusers/mostactive";
+    private static final String REQUEST = "/amazon-users/most-active-users";
     @MockBean
     private AmazonUserService amazonUserService;
     @MockBean

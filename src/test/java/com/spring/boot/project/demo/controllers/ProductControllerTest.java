@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
 public class ProductControllerTest {
-    private static final String REQUEST = "/products/mostcommented";
+    private static final String REQUEST = "/products/most-commented-products";
     @MockBean
     private ProductService productService;
     @MockBean
