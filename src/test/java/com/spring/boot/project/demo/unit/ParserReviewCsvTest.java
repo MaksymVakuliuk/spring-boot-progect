@@ -1,22 +1,22 @@
 package com.spring.boot.project.demo.unit;
 
+import com.spring.boot.project.demo.model.AmazonUser;
+import com.spring.boot.project.demo.model.Product;
+import com.spring.boot.project.demo.model.Review;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import com.spring.boot.project.demo.model.AmazonUser;
-import com.spring.boot.project.demo.model.Product;
-import com.spring.boot.project.demo.model.Review;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ParserReviewCsvTest {
+    private static final String EXPECTED_PARSER_REVIEW_TEST_PATH =
+            "src/test/resources/tests/util/expected_parser_reviews_test.csv";
+    private static final String EMPTY_REVIEW_TEST_PATH =
+            "src/test/resources/tests/util/empty_reviews_test.csv";
     private final FileReader fileReader = new FileUtil();
     private final Parser<Review> parsedReviewParser = new ParserReviewCsv();
-    private final static String EXPECTED_PARSER_REVIEW_TEST_PATH =
-            "src/test/resources/tests/util/expected_parser_reviews_test.csv";
-    private final static String EMPTY_REVIEW_TEST_PATH =
-            "src/test/resources/tests/util/empty_reviews_test.csv";
 
     @Test
     public void parseCsvLinesOfEmptyFile() {
@@ -25,7 +25,7 @@ public class ParserReviewCsvTest {
     }
 
     @Test
-    public void parseCSVReviewFromStrings() {
+    public void parseCsvReviewFromStrings() {
         Review expectedReview1 = new Review();
         AmazonUser amazonUser1 = new AmazonUser();
         amazonUser1.setUserId("A3SGXH7AUHU8GW");

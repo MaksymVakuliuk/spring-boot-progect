@@ -3,11 +3,12 @@ package com.spring.boot.project.demo.controllers;
 import com.spring.boot.project.demo.model.UsersRole;
 import com.spring.boot.project.demo.repository.UsersRoleRepository;
 import com.spring.boot.project.demo.service.DbService;
+import io.swagger.annotations.ApiOperation;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +24,8 @@ public class InjectController {
         insertRoles();
     }
 
-    @RequestMapping("/injectreviewstodb")
+    @ApiOperation(value = "Inserting data from data to DB.")
+    @GetMapping("/inject-reviews-to-db")
     public String insertReviewsToDb() {
         dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
         return "Success inject data to db.";

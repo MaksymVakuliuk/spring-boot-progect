@@ -1,19 +1,18 @@
 package com.spring.boot.project.demo.repository;
 
+import static org.junit.Assert.assertEquals;
+
 import com.spring.boot.project.demo.model.AmazonUser;
+import com.spring.boot.project.demo.service.DbService;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.spring.boot.project.demo.service.DbService;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,5 +1,9 @@
 package com.spring.boot.project.demo.service.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import com.google.common.collect.ImmutableList;
 import com.spring.boot.project.demo.model.AmazonUser;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
@@ -22,13 +26,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 public class ReviewServiceImplTest {
-    private final List<String> EXPECTED_MOST_USED_WORDS = List.of("review", "text");
+    private static final ImmutableList<String> EXPECTED_MOST_USED_WORDS
+            = ImmutableList.of("review", "text");
     @Mock
     private ReviewRepository reviewRepository;
     @Mock
@@ -120,7 +123,7 @@ public class ReviewServiceImplTest {
     public void findMostUsedWords() {
         Mockito.when(reviewRepository.getAllText()).thenReturn(allText);
         List<String> mostUsedWords = reviewServiceImpl.findMostUsedWords(2);
-        assertEquals(EXPECTED_MOST_USED_WORDS , mostUsedWords);
+        assertEquals(EXPECTED_MOST_USED_WORDS, mostUsedWords);
     }
 
     @Test
