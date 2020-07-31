@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @WebMvcTest(ReviewController.class)
 public class ReviewControllerTest {
-    private static final String REQUEST = "/reviews/mostusedwords";
+    private static final String REQUEST = "/reviews/most-used-words";
     private static final List<String> EXPECTED_MOST_USED_WORDS = List.of("review", "text");
     @MockBean
     private ReviewService reviewService;
