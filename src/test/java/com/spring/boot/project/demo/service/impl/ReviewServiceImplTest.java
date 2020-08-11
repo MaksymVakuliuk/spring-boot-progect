@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import com.google.common.collect.ImmutableList;
-import com.spring.boot.project.demo.model.AmazonUser;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
-import com.spring.boot.project.demo.repository.AmazonUserRepository;
+import com.spring.boot.project.demo.model.User;
 import com.spring.boot.project.demo.repository.ProductRepository;
 import com.spring.boot.project.demo.repository.ReviewRepository;
+import com.spring.boot.project.demo.repository.UserRepository;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -37,7 +37,7 @@ public class ReviewServiceImplTest {
     @Mock
     private ProductRepository productRepository;
     @Mock
-    private AmazonUserRepository amazonUserRepository;
+    private UserRepository userRepository;
     @InjectMocks
     private ReviewServiceImpl reviewServiceImpl;
     private List<Review> reviewList;
@@ -48,10 +48,10 @@ public class ReviewServiceImplTest {
         reviewList = new ArrayList<>();
         Review review1 = new Review();
         review1.setId(1L);
-        AmazonUser amazonUser1 = new AmazonUser();
-        amazonUser1.setUserId("userId1");
-        amazonUser1.setProfileName("user1");
-        review1.setAmazonUser(amazonUser1);
+        User user1 = new User();
+        user1.setUserId("userId1");
+        user1.setProfileName("user1");
+        review1.setUser(user1);
         Product product1 = new Product();
         product1.setProductId("productId1");
         review1.setProduct(product1);
@@ -66,10 +66,10 @@ public class ReviewServiceImplTest {
         reviewList.add(review1);
         Review review2 = new Review();
         review2.setId(2L);
-        AmazonUser amazonUser2 = new AmazonUser();
-        amazonUser2.setUserId("userId2");
-        amazonUser2.setProfileName("user2");
-        review2.setAmazonUser(amazonUser1);
+        User user2 = new User();
+        user2.setUserId("userId2");
+        user2.setProfileName("user2");
+        review2.setUser(user1);
         Product product2 = new Product();
         product2.setProductId("productId2");
         review2.setProduct(product1);
@@ -87,6 +87,31 @@ public class ReviewServiceImplTest {
                 "Review 3 text. Third.",
                 "Review 4 text. Fourth.",
                 "Review 5 text. Fifth.");
+        Review review3 = new Review();
+        review3.setId(2L);
+        User user3 = new User();
+        user3.setProfileName("user");
+        review3.setUser(user1);
+        Product product3 = new Product();
+        product3.setProductId("productId2");
+        review3.setProduct(product1);
+        review3.setHelpfulnessNumerator(1);
+        review3.setHelpfulnessDenominator(1);
+        review3.setScore(5);
+        review3.setTime(LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(
+                        1303862770L), ZoneId.systemDefault()));
+        review3.setSummary("my users");
+        review3.setText("Review from logined user text.");
+        reviewList.add(review3);
+    }
+
+    @Test
+    public void saveFromLo() {
+        Review expectedReview = reviewList.get(2);
+        Mockito.when(reviewRepository.save(expectedReview)).thenReturn(expectedReview);
+        Review saveReview = reviewServiceImpl.save(expectedReview);
+        assertEquals(expectedReview, saveReview);
     }
 
     @Test
@@ -128,30 +153,30 @@ public class ReviewServiceImplTest {
 
     @Test
     public void findReviewsSetOfProduct() {
-        List<Review> listReviewByAmazonUser = reviewList.stream()
+        List<Review> listReviewByUser = reviewList.stream()
                 .filter(review -> review.getProduct().getProductId().equals("productId1"))
                 .collect(Collectors.toList());
         Mockito.when(reviewRepository.findByProduct_ProductId("productId1"))
-                .thenReturn(listReviewByAmazonUser);
-        Set<Review> setReviewsByAmazonUser = reviewServiceImpl
+                .thenReturn(listReviewByUser);
+        Set<Review> setReviewsByUser = reviewServiceImpl
                 .findReviewsSetOfProduct("productId1");
-        for (Review review : setReviewsByAmazonUser) {
-            assertNull(review.getAmazonUser().getReviews());
+        for (Review review : setReviewsByUser) {
+            assertNull(review.getUser().getReviews());
             assertNull(review.getProduct());
         }
     }
 
     @Test
-    public void findReviewSetOfAmazonUser() {
-        List<Review> listReviewByAmazonUser = reviewList.stream()
-                .filter(review -> review.getAmazonUser().getUserId().equals("user1id"))
+    public void findReviewSetOfUser() {
+        List<Review> listReviewByUser = reviewList.stream()
+                .filter(review -> review.getUser().getUserId().equals("user1id"))
                 .collect(Collectors.toList());
-        Mockito.when(reviewRepository.findByAmazonUser_UserId("user1id"))
-                .thenReturn(listReviewByAmazonUser);
-        Set<Review> setReviewByAmazonUser = reviewServiceImpl
-                .findReviewSetOfAmazonUser("user1id");
-        for (Review review : setReviewByAmazonUser) {
-            assertNull(review.getAmazonUser());
+        Mockito.when(reviewRepository.findByUser_UserId("user1id"))
+                .thenReturn(listReviewByUser);
+        Set<Review> setReviewByUser = reviewServiceImpl
+                .findReviewSetOfUser("user1id");
+        for (Review review : setReviewByUser) {
+            assertNull(review.getUser());
             assertNull(review.getProduct().getReviews());
         }
     }

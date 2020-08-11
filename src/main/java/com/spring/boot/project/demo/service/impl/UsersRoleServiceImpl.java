@@ -3,9 +3,9 @@ package com.spring.boot.project.demo.service.impl;
 import com.spring.boot.project.demo.model.UsersRole;
 import com.spring.boot.project.demo.repository.UsersRoleRepository;
 import com.spring.boot.project.demo.service.UsersRoleService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 @AllArgsConstructor

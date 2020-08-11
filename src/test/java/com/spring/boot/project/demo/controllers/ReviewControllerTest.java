@@ -30,7 +30,7 @@ public class ReviewControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username = "admin", password = "pass")
+    @WithMockUser(username = "user", password = "pass")
     public void getMostCommentedProduct() throws Exception {
         Mockito.when(reviewService.findMostUsedWords(2)).thenReturn(EXPECTED_MOST_USED_WORDS);
         mockMvc.perform(get(REQUEST).param("numberOfWords", "2"))

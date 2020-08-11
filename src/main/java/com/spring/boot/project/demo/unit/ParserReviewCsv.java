@@ -1,8 +1,8 @@
 package com.spring.boot.project.demo.unit;
 
-import com.spring.boot.project.demo.model.AmazonUser;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
+import com.spring.boot.project.demo.model.User;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -50,10 +50,10 @@ public class ParserReviewCsv implements Parser<Review> {
 
     private Review getReviewFromRecord(CSVRecord record) {
         Review review = new Review();
-        AmazonUser amazonUser = new AmazonUser();
-        amazonUser.setUserId(record.get(USER_ID));
-        amazonUser.setProfileName(record.get(PROFILE_NAME));
-        review.setAmazonUser(amazonUser);
+        User user = new User();
+        user.setUserId(record.get(USER_ID));
+        user.setProfileName(record.get(PROFILE_NAME));
+        review.setUser(user);
         Product product = new Product();
         product.setProductId(record.get(PRODUCT_ID));
         review.setProduct(product);

@@ -25,6 +25,6 @@ public class ProductController {
     public List<ProductDto> getMostCommentedProduct(
             @RequestParam(defaultValue = "1000") int numberOfProducts) {
         return productService.findMostCommentedProduct(numberOfProducts).stream()
-                .map(productMapper::convertToAmazonUserDto).collect(Collectors.toList());
+                .map(productMapper::convertToUserDto).collect(Collectors.toList());
     }
 }

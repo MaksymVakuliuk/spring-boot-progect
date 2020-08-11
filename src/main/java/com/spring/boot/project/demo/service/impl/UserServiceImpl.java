@@ -3,18 +3,19 @@ package com.spring.boot.project.demo.service.impl;
 import com.spring.boot.project.demo.model.User;
 import com.spring.boot.project.demo.repository.UserRepository;
 import com.spring.boot.project.demo.service.UserService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public User save(User User) {
-        return userRepository.save(User);
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(String id) {
         return userRepository.findById(id).orElseThrow();
     }
 
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         userRepository.deleteById(id);
     }
 
@@ -53,7 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByProfileName(String profileName) {
+        return userRepository.findByProfileName(profileName);
+    }
+
+    @Override
+    public List<User> findMostActiveUsers(int numberOfUsers) {
+        return userRepository.findMostActiveUsers(PageRequest.of(0, numberOfUsers));
     }
 }

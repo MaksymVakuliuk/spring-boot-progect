@@ -1,11 +1,11 @@
 package com.spring.boot.project.demo.service.impl;
 
-import com.spring.boot.project.demo.model.AmazonUser;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
-import com.spring.boot.project.demo.repository.AmazonUserRepository;
+import com.spring.boot.project.demo.model.User;
 import com.spring.boot.project.demo.repository.ProductRepository;
 import com.spring.boot.project.demo.repository.ReviewRepository;
+import com.spring.boot.project.demo.repository.UserRepository;
 import com.spring.boot.project.demo.service.ReviewService;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
-    private final AmazonUserRepository amazonUserRepository;
+    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
 
@@ -32,13 +32,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> saveAll(List<Review> reviewsList) {
-        Set<AmazonUser> amazonUserSet = new HashSet<>();
+        Set<User> userSet = new HashSet<>();
         Set<Product> productSet = new HashSet<>();
         for (Review review : reviewsList) {
-            amazonUserSet.add(review.getAmazonUser());
+            userSet.add(review.getUser());
             productSet.add(review.getProduct());
         }
-        amazonUserRepository.saveAll(amazonUserSet);
+        userRepository.saveAll(userSet);
         productRepository.saveAll(productSet);
         reviewRepository.saveAll(reviewsList);
         return reviewsList;
@@ -99,18 +99,18 @@ public class ReviewServiceImpl implements ReviewService {
         return byProductId.stream()
                 .map(review -> {
                     review.setProduct(null);
-                    review.getAmazonUser().setReviews(null);
+                    review.getUser().setReviews(null);
                     return review;
                 })
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<Review> findReviewSetOfAmazonUser(String userId) {
-        List<Review> byAmazonUserId = reviewRepository.findByAmazonUser_UserId(userId);
-        return byAmazonUserId.stream()
+    public Set<Review> findReviewSetOfUser(String userId) {
+        List<Review> byUserId = reviewRepository.findByUser_UserId(userId);
+        return byUserId.stream()
                 .map(review -> {
-                    review.setAmazonUser(null);
+                    review.setUser(null);
                     review.getProduct().setReviews(null);
                     return review;
                 })
