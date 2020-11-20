@@ -1,8 +1,8 @@
 package com.spring.boot.project.demo.unit;
 
-import com.spring.boot.project.demo.model.AmazonUser;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
+import com.spring.boot.project.demo.model.User;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -27,10 +27,10 @@ public class ParserReviewCsvTest {
     @Test
     public void parseCsvReviewFromStrings() {
         Review expectedReview1 = new Review();
-        AmazonUser amazonUser1 = new AmazonUser();
-        amazonUser1.setUserId("A3SGXH7AUHU8GW");
-        amazonUser1.setProfileName("delmartian");
-        expectedReview1.setAmazonUser(amazonUser1);
+        User user1 = new User();
+        user1.setUserId("A3SGXH7AUHU8GW");
+        user1.setProfileName("delmartian");
+        expectedReview1.setUser(user1);
         Product product1 = new Product();
         product1.setProductId("B001E4KFG0");
         expectedReview1.setProduct(product1);
@@ -43,10 +43,10 @@ public class ParserReviewCsvTest {
         expectedReview1.setSummary("Good Quality Dog Food");
         expectedReview1.setText("Review 1 text.");
         Review expectedReview2 = new Review();
-        AmazonUser amazonUser2 = new AmazonUser();
-        amazonUser2.setUserId("A1D87F6ZCVE5NK");
-        amazonUser2.setProfileName("dll pa");
-        expectedReview2.setAmazonUser(amazonUser2);
+        User user2 = new User();
+        user2.setUserId("A1D87F6ZCVE5NK");
+        user2.setProfileName("dll pa");
+        expectedReview2.setUser(user2);
         Product product2 = new Product();
         product2.setProductId("B00813GRG4");
         expectedReview2.setProduct(product2);

@@ -42,8 +42,8 @@ public class ReviewRepositoryTest {
     }
 
     @Test
-    public void findByAmazonUser_UserId() {
-        assertEquals(2, reviewRepository.findByAmazonUser_UserId("user1").size());
+    public void findByUser_UserId() {
+        assertEquals(2, reviewRepository.findByUser_UserId("user1").size());
     }
 
     @Test

@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
+@AutoConfigureMockMvc
 public class ProductControllerTest {
     private static final String REQUEST = "/products/most-commented-products";
     @MockBean
@@ -35,7 +37,7 @@ public class ProductControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username = "admin", password = "pass")
+    @WithMockUser(username = "user", password = "pass")
     public void getMostCommentedProductTest() throws Exception {
         Product product1 = new Product();
         product1.setProductId("productId1");
@@ -49,8 +51,8 @@ public class ProductControllerTest {
         ProductDto productDto2 = new ProductDto();
         productDto2.setProductId("productId2");
         Mockito.when(productService.findMostCommentedProduct(2)).thenReturn(productList);
-        Mockito.when(productMapper.convertToAmazonUserDto(product1)).thenReturn(productDto1);
-        Mockito.when(productMapper.convertToAmazonUserDto(product2)).thenReturn(productDto2);
+        Mockito.when(productMapper.convertToUserDto(product1)).thenReturn(productDto1);
+        Mockito.when(productMapper.convertToUserDto(product2)).thenReturn(productDto2);
         mockMvc.perform(get(REQUEST).param("numberOfProducts", "2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
