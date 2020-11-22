@@ -40,10 +40,4 @@ public class User {
     private Set<Review> reviews;
     @ManyToMany
     private Set<UsersRole> roles;
-
-//    public User(String profileName, String password, Set<UsersRole> roles) {
-//        this.profileName = profileName;
-//        this.password = password;
-//        this.roles = roles;
-//    }
 }

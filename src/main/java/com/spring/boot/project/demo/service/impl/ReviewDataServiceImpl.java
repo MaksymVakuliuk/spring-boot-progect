@@ -3,6 +3,7 @@ package com.spring.boot.project.demo.service.impl;
 import com.spring.boot.project.demo.model.Review;
 import com.spring.boot.project.demo.service.DbService;
 import com.spring.boot.project.demo.service.ProductService;
+import com.spring.boot.project.demo.service.ReviewService;
 import com.spring.boot.project.demo.service.UserService;
 import com.spring.boot.project.demo.unit.FileReader;
 import com.spring.boot.project.demo.unit.Parser;
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ReviewDataService implements DbService {
+public class ReviewDataServiceImpl implements DbService {
     private final FileReader fileReader;
     private final Parser<Review> parser;
-    private final ReviewServiceImpl reviewService;
+    private final ReviewService reviewService;
     private final ProductService productService;
     private final UserService userService;
 
