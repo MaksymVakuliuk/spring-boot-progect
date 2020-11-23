@@ -17,4 +17,3 @@ public class ProductMapper {
         return product;
     }
 }
-
