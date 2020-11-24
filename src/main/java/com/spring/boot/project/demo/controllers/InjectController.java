@@ -6,7 +6,6 @@ import com.spring.boot.project.demo.model.User;
 import com.spring.boot.project.demo.model.UsersRole;
 import com.spring.boot.project.demo.repository.UsersRoleRepository;
 import com.spring.boot.project.demo.service.DbService;
-import com.spring.boot.project.demo.service.ProductService;
 import com.spring.boot.project.demo.service.ReviewService;
 import com.spring.boot.project.demo.service.UserService;
 import com.spring.boot.project.demo.service.UsersRoleService;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class InjectController {
     private static final String REVIEWS_CSV_FILE_PATH
             = "src/main/resources/csv/Reviews.csv";
-    private final ProductService productService;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final UsersRoleRepository usersRoleRepository;

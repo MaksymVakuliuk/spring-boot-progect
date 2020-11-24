@@ -19,7 +19,7 @@ public class ReviewMapper {
         reviewFromDbDto.setUserDto(userMapper
                 .convertToUserDto(review.getUser()));
         reviewFromDbDto
-                .setProductDto(productMapper.convertToUserDto(review.getProduct()));
+                .setProductDto(productMapper.convertToProductDto(review.getProduct()));
         reviewFromDbDto.setHelpfulnessNumerator(review.getHelpfulnessNumerator());
         reviewFromDbDto.setHelpfulnessDenominator(review.getHelpfulnessDenominator());
         reviewFromDbDto.setScore(review.getScore());

@@ -51,8 +51,8 @@ public class ProductControllerTest {
         ProductDto productDto2 = new ProductDto();
         productDto2.setProductId("productId2");
         Mockito.when(productService.findMostCommentedProduct(2)).thenReturn(productList);
-        Mockito.when(productMapper.convertToUserDto(product1)).thenReturn(productDto1);
-        Mockito.when(productMapper.convertToUserDto(product2)).thenReturn(productDto2);
+        Mockito.when(productMapper.convertToProductDto(product1)).thenReturn(productDto1);
+        Mockito.when(productMapper.convertToProductDto(product2)).thenReturn(productDto2);
         mockMvc.perform(get(REQUEST).param("numberOfProducts", "2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
