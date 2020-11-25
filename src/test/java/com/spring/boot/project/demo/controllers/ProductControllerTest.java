@@ -59,4 +59,5 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath("$[1].productId", Matchers.is("productId2")));
     }
+
 }

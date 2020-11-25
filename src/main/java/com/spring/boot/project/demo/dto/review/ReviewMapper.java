@@ -4,7 +4,12 @@ import com.spring.boot.project.demo.dto.product.ProductMapper;
 import com.spring.boot.project.demo.dto.user.UserMapper;
 import com.spring.boot.project.demo.model.Product;
 import com.spring.boot.project.demo.model.Review;
+import com.spring.boot.project.demo.model.User;
+import com.spring.boot.project.demo.service.ProductService;
+import com.spring.boot.project.demo.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +17,10 @@ import org.springframework.stereotype.Component;
 public class ReviewMapper {
     private UserMapper userMapper;
     private ProductMapper productMapper;
+    private ProductService productService;
+    private UserService userService;
 
-    public ReviewFromDbDto convertToReviewFromDbDto(Review review) {
+    public ReviewFromDbDto convertReviewToReviewFromDbDto(Review review) {
         ReviewFromDbDto reviewFromDbDto = new ReviewFromDbDto();
         reviewFromDbDto.setId(review.getId());
         reviewFromDbDto.setUserDto(userMapper
@@ -29,19 +36,34 @@ public class ReviewMapper {
         return reviewFromDbDto;
     }
 
-    public Review convertFromParsedReviewDto(ParsedReviewDto parsedReviewDto) {
+    public Review convertReviewRequestDtoToReview(ReviewRequestDto reviewRequestDto) {
         Review review = new Review();
-        review.setUser(new UserMapper()
-                .convertFromUserDto(parsedReviewDto.getUserDto()));
-        Product product = new Product();
-        product.setProductId(parsedReviewDto.getProductId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByProfileName(authentication.getName());
+        review.setUser(user);
+        Product product = productService.findById(reviewRequestDto.getProductId());
         review.setProduct(product);
-        review.setHelpfulnessNumerator(parsedReviewDto.getHelpfulnessNumerator());
-        review.setHelpfulnessDenominator(parsedReviewDto.getHelpfulnessDenominator());
-        review.setScore(parsedReviewDto.getScore());
-        review.setTime(parsedReviewDto.getTime());
-        review.setSummary(parsedReviewDto.getSummary());
-        review.setText(parsedReviewDto.getText());
+        review.setHelpfulnessNumerator(reviewRequestDto.getHelpfulnessNumerator());
+        review.setHelpfulnessDenominator(reviewRequestDto.getHelpfulnessDenominator());
+        review.setScore(reviewRequestDto.getScore());
+        review.setSummary(reviewRequestDto.getSummary());
+        review.setText(reviewRequestDto.getText());
+        return review;
+    }
+
+    public Review convertReviewDbDtoToReview(ReviewFromDbDto reviewFromDbDto) {
+        Review review = new Review();
+        review.setId(reviewFromDbDto.getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByProfileName(authentication.getName());
+        review.setUser(user);
+        Product product = productService.findById(reviewFromDbDto.getProductDto().getProductId());
+        review.setProduct(product);
+        review.setHelpfulnessNumerator(reviewFromDbDto.getHelpfulnessNumerator());
+        review.setHelpfulnessDenominator(reviewFromDbDto.getHelpfulnessDenominator());
+        review.setScore(reviewFromDbDto.getScore());
+        review.setSummary(reviewFromDbDto.getSummary());
+        review.setText(reviewFromDbDto.getText());
         return review;
     }
 }

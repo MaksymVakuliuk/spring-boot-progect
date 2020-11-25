@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,21 @@ public class ProductController {
     public List<ProductDto> getMostCommentedProduct(
             @RequestParam(defaultValue = "1000") int numberOfProducts) {
         return productService.findMostCommentedProduct(numberOfProducts).stream()
-                .map(productMapper::convertToProductDto).collect(Collectors.toList());
+                .map(productMapper::convertToProductDto)
+                .collect(Collectors.toList());
+    }
+
+    @ApiOperation(value = "Show all food items.")
+    @GetMapping
+    public List<ProductDto> getAllProduct() {
+        return productService.findAll().stream()
+                .map(productMapper::convertToProductDto)
+                .collect(Collectors.toList());
+    }
+
+    @ApiOperation(value = "Show food items by id.")
+    @GetMapping("{id}")
+    public ProductDto getProductId(@PathVariable(name = "id", required = false) String productId) {
+        return productMapper.convertToProductDto(productService.findById(productId));
     }
 }

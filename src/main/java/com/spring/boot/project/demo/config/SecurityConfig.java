@@ -3,6 +3,7 @@ package com.spring.boot.project.demo.config;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String USER_ROLE = "USER";
     private final UserDetailsService userDetailsService;
 
     @Autowired
@@ -26,6 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/reviews/remove/**").hasRole(ADMIN_ROLE)
+                .antMatchers(HttpMethod.GET,"/reviews/all").hasRole(ADMIN_ROLE)
+                .antMatchers(HttpMethod.POST, "/reviews/save").hasRole(USER_ROLE)
+                .antMatchers(HttpMethod.POST, "/reviews/update").hasRole(USER_ROLE)
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

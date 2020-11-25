@@ -4,3 +4,4 @@ Id,ProductId,UserId,ProfileName,HelpfulnessNumerator,HelpfulnessDenominator,Scor
 3,product1,user2,user2Name,3,1,5,1303862445,some text,Review 3 text. Third.
 4,product2,user1,user1Name,0,1,3,1346976020,some other text,Review 4 text. Fourth.
 5,product1,user3,user3Name,3,3,3,1326934293,texxxt,Review 5 text. Fifth.
+6,product3,user1,user1Name,3,3,3,1226824293,ttt,review 6 text. Sixth.
