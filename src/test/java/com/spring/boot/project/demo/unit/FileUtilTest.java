@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class FileUtilTest {
     private static final String LINES_TEST_FILE_PATH
             = "src/test/resources/tests/util/lines-for-test.txt";
