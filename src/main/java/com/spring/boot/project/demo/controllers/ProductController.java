@@ -40,7 +40,8 @@ public class ProductController {
 
     @ApiOperation(value = "Show food items by id.")
     @GetMapping("{id}")
-    public ProductDto getProductId(@PathVariable(name = "id", required = false) String productId) {
+    public ProductDto getProductById(
+            @PathVariable(name = "id", required = false) String productId) {
         return productMapper.convertToProductDto(productService.findById(productId));
     }
 }

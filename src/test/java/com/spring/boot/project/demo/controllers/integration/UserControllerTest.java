@@ -1,4 +1,4 @@
-package com.spring.boot.project.demo.controllers;
+package com.spring.boot.project.demo.controllers.integration;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
