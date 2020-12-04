@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class UserMapper {
     private static final String USER_ROLE = "USER";
-    private UsersRoleService usersRoleService;
+    private final UsersRoleService usersRoleService;
 
     public UserDto convertToUserDto(User user) {
         UserDto userDto = new UserDto();

@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class ReviewMapper {
-    private UserMapper userMapper;
-    private ProductMapper productMapper;
-    private ProductService productService;
-    private UserService userService;
+    private final UserMapper userMapper;
+    private final ProductMapper productMapper;
+    private final ProductService productService;
+    private final UserService userService;
 
     public ReviewFromDbDto convertReviewToReviewFromDbDto(Review review) {
         ReviewFromDbDto reviewFromDbDto = new ReviewFromDbDto();
