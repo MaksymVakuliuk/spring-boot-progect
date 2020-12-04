@@ -1,5 +1,7 @@
 package com.spring.boot.project.demo.controllers.integration;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -8,13 +10,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.boot.project.demo.dto.product.ProductDto;
 import com.spring.boot.project.demo.dto.review.ReviewFromDbDto;
 import com.spring.boot.project.demo.dto.review.ReviewMapper;
 import com.spring.boot.project.demo.dto.review.ReviewRequestDto;
-import com.spring.boot.project.demo.dto.user.UserDto;
 import com.spring.boot.project.demo.model.Review;
 import com.spring.boot.project.demo.service.DbService;
+import com.spring.boot.project.demo.service.ReviewService;
+import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,13 +38,17 @@ public class ReviewControllerTest {
             = "src/test/resources/tests/util/reviews_test.csv";
     private static final String GET_MOST_USER_WORDS_REQUEST = "/reviews/most-used-words";
     private static final String GET_ALL_REVIEWS_REQUEST = "/reviews/all";
-    private static final String POST_SAVE_REVIEWS_REQUEST = "/reviews/save";
+    private static final String POST_SAVE_REVIEW_REQUEST = "/reviews/save";
+    private static final String POST_UPDATE_REVIEW_REQUEST = "/reviews/update";
+    private static final String GET_DELETE_REVIEW_REQUEST = "/reviews/remove/";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private ReviewMapper reviewMapper;
-    @Autowired
     private DbService dbService;
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private ReviewMapper reviewMapper;
 
     @Before
     public void inject() {
@@ -81,33 +88,80 @@ public class ReviewControllerTest {
         reviewRequestDto.setScore(2);
         reviewRequestDto.setSummary("testSummary");
         reviewRequestDto.setText("testText");
-        ReviewFromDbDto reviewFromDbDto = new ReviewFromDbDto();
-        reviewFromDbDto.setId(2L);
-        UserDto userDto = new UserDto();
-        userDto.setProfileName("user");
-        userDto.setUserId("testUserId");
-        reviewFromDbDto.setUserDto(userDto);
-        ProductDto productDto = new ProductDto();
-        productDto.setProductId("product1");
-        reviewFromDbDto.setProductDto(productDto);
-        reviewFromDbDto.setHelpfulnessNumerator(2);
-        reviewFromDbDto.setHelpfulnessDenominator(1);
-        reviewFromDbDto.setScore(2);
-        reviewFromDbDto.setSummary("testSummary");
-        reviewFromDbDto.setText("testText");
-        Review review = reviewMapper.convertReviewRequestDtoToReview(reviewRequestDto);
-        ObjectMapper objectMapper = new ObjectMapper();
         String jsonReviewRequestDto = "";
         try {
-            jsonReviewRequestDto = objectMapper.writer().writeValueAsString(reviewRequestDto);
+            jsonReviewRequestDto = new ObjectMapper().writer().writeValueAsString(reviewRequestDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        mockMvc.perform(post(POST_SAVE_REVIEWS_REQUEST)
+        mockMvc.perform(post(POST_SAVE_REVIEW_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonReviewRequestDto))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.helpfulnessNumerator", Matchers.is(2)))
+                .andExpect(jsonPath("$.helpfulnessDenominator", Matchers.is(1)))
+                .andExpect(jsonPath("$.score", Matchers.is(2)))
+                .andExpect(jsonPath("$.productDto.productId", Matchers.is("product1")))
+                .andExpect(jsonPath("$.userDto.profileName", Matchers.is("user")))
                 .andExpect(jsonPath("$.text", Matchers.is("testText")));
+    }
+
+    @Test
+    @WithMockUser(username = "user", password = "pass", roles = "USER")
+    public void updateReviewTest() throws Exception {
+        ReviewRequestDto reviewRequestDto = new ReviewRequestDto();
+        reviewRequestDto.setProductId("product1");
+        reviewRequestDto.setHelpfulnessNumerator(2);
+        reviewRequestDto.setHelpfulnessDenominator(1);
+        reviewRequestDto.setScore(2);
+        reviewRequestDto.setSummary("testSummary");
+        reviewRequestDto.setText("testText");
+        Review review = reviewMapper.convertReviewRequestDtoToReview(reviewRequestDto);
+        review.setTime(LocalDateTime.now());
+        reviewService.save(review);
+        review.setText("Updated summary.");
+        review.setTime(null);
+        ReviewFromDbDto reviewFromDbDto = reviewMapper.convertReviewToReviewFromDbDto(review);
+        String jsonReviewFromDbDto = "";
+        try {
+            jsonReviewFromDbDto = new ObjectMapper().writer().writeValueAsString(reviewFromDbDto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        mockMvc.perform(post(POST_UPDATE_REVIEW_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonReviewFromDbDto))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", Matchers.notNullValue()))
+                .andExpect(jsonPath("$.helpfulnessNumerator", Matchers.is(2)))
+                .andExpect(jsonPath("$.helpfulnessDenominator", Matchers.is(1)))
+                .andExpect(jsonPath("$.score", Matchers.is(2)))
+                .andExpect(jsonPath("$.productDto.productId", Matchers.is("product1")))
+                .andExpect(jsonPath("$.userDto.profileName", Matchers.is("user")))
+                .andExpect(jsonPath("$.text", Matchers.is("Updated summary.")));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    @WithMockUser(username = "user", password = "pass", roles = "ADMIN")
+    public void deleteReviewTest() throws Exception {
+        ReviewRequestDto reviewRequestDto = new ReviewRequestDto();
+        reviewRequestDto.setProductId("product1");
+        reviewRequestDto.setHelpfulnessNumerator(2);
+        reviewRequestDto.setHelpfulnessDenominator(1);
+        reviewRequestDto.setScore(2);
+        reviewRequestDto.setSummary("testSummary");
+        reviewRequestDto.setText("testText");
+        Review review = reviewMapper.convertReviewRequestDtoToReview(reviewRequestDto);
+        review.setTime(LocalDateTime.now());
+        reviewService.save(review);
+        assertNotNull(reviewService.findById(review.getId()));
+        mockMvc.perform(get(GET_DELETE_REVIEW_REQUEST + review.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.is("Review with id " + review.getId() + " was deleted.")));
+        assertNull(reviewService.findById(review.getId()).getId());
     }
 }

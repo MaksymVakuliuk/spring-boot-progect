@@ -8,10 +8,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.spring.boot.project.demo.dto.product.ProductDto;
 import com.spring.boot.project.demo.dto.product.ProductMapper;
 import com.spring.boot.project.demo.model.Product;
+import com.spring.boot.project.demo.service.DbService;
 import com.spring.boot.project.demo.service.ProductService;
 import java.util.ArrayList;
 import java.util.List;
 import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -28,6 +30,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProductControllerTest {
+    private static final String REVIEWS_CSV_FILE_PATH
+            = "src/test/resources/tests/util/reviews_test.csv";
     private static final String GET_MOST_COMMENTED_PRODUCT_REQUEST =
             "/products/most-commented-products";
     private static final String GET_ALL_PRODUCTS = "/products";
@@ -37,6 +41,13 @@ public class ProductControllerTest {
     private ProductMapper productMapper;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private DbService dbService;
+
+    @Before
+    public void inject() {
+        dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
+    }
 
     @Test
     @WithMockUser(username = "user", password = "pass", roles = "USER")
