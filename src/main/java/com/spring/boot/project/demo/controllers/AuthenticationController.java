@@ -14,8 +14,8 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @ApiOperation(value = "Users registrations.")
-    @PostMapping("/log-up")
-    public String logUp(@RequestBody UserRequestDto userRequestDto) {
+    @PostMapping("/register")
+    public String register(@RequestBody UserRequestDto userRequestDto) {
         return authenticationService.logUp(userRequestDto) ? "You registered."
                 : "Registration not successful.";
     }
