@@ -36,7 +36,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", password = "pass", roles = "USER")
+    @WithMockUser(username = "user", password = "pass", roles = "ADMIN")
     public void getMostActiveUserTest() throws Exception {
         mockMvc.perform(get(REQUEST).param("numberOfUsers", "2"))
                 .andExpect(status().isOk())

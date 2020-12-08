@@ -56,7 +56,7 @@ public class ReviewControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", password = "pass", roles = "USER")
+    @WithMockUser(username = "user", password = "pass", roles = "ADMIN")
     public void getMostUsedWords() throws Exception {
         mockMvc.perform(get(GET_MOST_USER_WORDS_REQUEST).param("numberOfWords", "2"))
                 .andExpect(status().isOk())
@@ -67,7 +67,6 @@ public class ReviewControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", password = "pass", roles = "ADMIN")
     public void getAll() throws Exception {
         mockMvc.perform(get(GET_ALL_REVIEWS_REQUEST))
                 .andExpect(status().isOk())
