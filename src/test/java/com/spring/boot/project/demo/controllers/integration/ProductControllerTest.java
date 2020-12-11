@@ -58,7 +58,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductById() throws Exception {
+    public void getByProductId() throws Exception {
         mockMvc.perform(get("/products/product1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

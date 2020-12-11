@@ -70,13 +70,13 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductById() throws Exception {
+    public void getByProductId() {
         Product product = new Product();
         product.setProductId("productId");
         ProductDto productDto = new ProductDto();
         productDto.setProductId("productId");
         Mockito.when(productService.findById("productId")).thenReturn(product);
         Mockito.when(productMapper.convertToProductDto(product)).thenReturn(productDto);
-        assertEquals(productDto, productController.getProductById("productId"));
+        assertEquals(productDto, productController.getByProductId("productId"));
     }
 }

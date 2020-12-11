@@ -2,8 +2,10 @@ package com.spring.boot.project.demo.controllers.integration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,8 +41,8 @@ public class ReviewControllerTest {
     private static final String GET_MOST_USER_WORDS_REQUEST = "/reviews/most-used-words";
     private static final String GET_ALL_REVIEWS_REQUEST = "/reviews/all";
     private static final String POST_SAVE_REVIEW_REQUEST = "/reviews/save";
-    private static final String POST_UPDATE_REVIEW_REQUEST = "/reviews/update";
-    private static final String GET_DELETE_REVIEW_REQUEST = "/reviews/remove/";
+    private static final String PUT_UPDATE_REVIEW_REQUEST = "/reviews/update";
+    private static final String DELETE_REVIEW_REQUEST = "/reviews/remove/";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -87,15 +89,9 @@ public class ReviewControllerTest {
         reviewRequestDto.setScore(2);
         reviewRequestDto.setSummary("testSummary");
         reviewRequestDto.setText("testText");
-        String jsonReviewRequestDto = "";
-        try {
-            jsonReviewRequestDto = new ObjectMapper().writer().writeValueAsString(reviewRequestDto);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
         mockMvc.perform(post(POST_SAVE_REVIEW_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonReviewRequestDto))
+                .content(createJsonFromDto(reviewRequestDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", Matchers.notNullValue()))
@@ -123,15 +119,9 @@ public class ReviewControllerTest {
         review.setText("Updated summary.");
         review.setTime(null);
         ReviewFromDbDto reviewFromDbDto = reviewMapper.convertReviewToReviewFromDbDto(review);
-        String jsonReviewFromDbDto = "";
-        try {
-            jsonReviewFromDbDto = new ObjectMapper().writer().writeValueAsString(reviewFromDbDto);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        mockMvc.perform(post(POST_UPDATE_REVIEW_REQUEST)
+        mockMvc.perform(put(PUT_UPDATE_REVIEW_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonReviewFromDbDto))
+                .content(createJsonFromDto(reviewFromDbDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", Matchers.notNullValue()))
@@ -157,10 +147,19 @@ public class ReviewControllerTest {
         review.setTime(LocalDateTime.now());
         reviewService.save(review);
         assertNotNull(reviewService.findById(review.getId()));
-        mockMvc.perform(get(GET_DELETE_REVIEW_REQUEST + review.getId()))
+        mockMvc.perform(delete(DELETE_REVIEW_REQUEST + review.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
                         Matchers.is("Review with id " + review.getId() + " was deleted.")));
         assertNull(reviewService.findById(review.getId()).getId());
+    }
+
+    private String createJsonFromDto(Object dto) {
+        try {
+            return new ObjectMapper().writer().writeValueAsString(dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

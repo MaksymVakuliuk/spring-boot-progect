@@ -20,8 +20,8 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
 
-    @ApiOperation(value = "Finding most commented food items.",
-            notes = "Default numbers of food items to find is 1000.")
+    @ApiOperation(value = "Finding most commented products.",
+            notes = "Default numbers of products to find is 1000.")
     @GetMapping("/most-commented-products")
     public List<ProductDto> getMostCommentedProduct(
             @RequestParam(defaultValue = "1000") int numberOfProducts) {
@@ -30,7 +30,7 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @ApiOperation(value = "Show all food items.")
+    @ApiOperation(value = "Get all products.")
     @GetMapping
     public List<ProductDto> getAllProduct() {
         return productService.findAll().stream()
@@ -38,9 +38,9 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @ApiOperation(value = "Show food items by id.")
+    @ApiOperation(value = "Get product by id.")
     @GetMapping("{id}")
-    public ProductDto getProductById(
+    public ProductDto getByProductId(
             @PathVariable(name = "id", required = false) String productId) {
         return productMapper.convertToProductDto(productService.findById(productId));
     }

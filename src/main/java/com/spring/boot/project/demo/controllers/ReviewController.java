@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +52,7 @@ public class ReviewController {
     }
 
     @ApiOperation(value = "Update product's review to database.")
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ReviewFromDbDto updateReview(@Valid @RequestBody ReviewFromDbDto reviewFromDbDto) {
         Review review = reviewMapper.convertReviewDbDtoToReview(reviewFromDbDto);
         review.setTime(LocalDateTime.now());
@@ -58,7 +60,7 @@ public class ReviewController {
     }
 
     @ApiOperation(value = "Delete product's review to database.")
-    @GetMapping("/remove/{id}")
+    @DeleteMapping("/remove/{id}")
     public String deleteReview(@PathVariable(name = "id") String reviewId) {
         reviewService.deleteById(Long.valueOf(reviewId));
         return "Review with id " + reviewId + " was deleted.";
