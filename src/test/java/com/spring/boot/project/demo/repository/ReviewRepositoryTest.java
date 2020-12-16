@@ -22,28 +22,29 @@ public class ReviewRepositoryTest {
 
     @Before
     public void setup() {
-        dbService.clearDb();
         dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
     }
 
     @Test
     public void getAllText() {
         String expectedText = "[Review 1 text. First., "
-                + "Review 2 text. Second. Second., "
+                + "Review 2 text. Second., "
                 + "Review 3 text. Third., "
                 + "Review 4 text. Fourth., "
-                + "Review 5 text. Fifth.]";
+                + "Review 5 text. Fifth., "
+                + "Review 6 text. Sixth."
+                + "]";
         assertEquals(expectedText, reviewRepository.getAllText().toString());
     }
 
     @Test
     public void findAll() {
-        assertEquals(5, reviewRepository.findAll().size());
+        assertEquals(6, reviewRepository.findAll().size());
     }
 
     @Test
     public void findByUser_UserId() {
-        assertEquals(2, reviewRepository.findByUser_UserId("user1").size());
+        assertEquals(3, reviewRepository.findByUser_UserId("user1").size());
     }
 
     @Test

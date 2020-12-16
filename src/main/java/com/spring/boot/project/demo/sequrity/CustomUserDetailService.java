@@ -17,7 +17,6 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         var currentUser = userService.findByProfileName(userName);
-
         UserBuilder userBuilder;
         if (currentUser != null) {
             userBuilder = User.withUsername(userName);

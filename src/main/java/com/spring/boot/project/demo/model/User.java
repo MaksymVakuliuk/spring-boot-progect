@@ -33,7 +33,7 @@ public class User {
                             value = "%010d")})
     @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
-    @Column(name = "profile_name", nullable = false)
+    @Column(name = "profile_name", nullable = false, unique = true)
     private String profileName;
     private String password;
     @OneToMany(mappedBy = "user")

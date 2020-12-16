@@ -26,7 +26,6 @@ public class ProductRepositoryTest {
 
     @Before
     public void setup() {
-        dbService.clearDb();
         dbService.initializeDb(REVIEWS_CSV_FILE_PATH);
     }
 
