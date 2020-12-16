@@ -1,12 +1,9 @@
 package com.spring.boot.project.demo.controllers;
 
-import com.spring.boot.project.demo.model.UsersRole;
-import com.spring.boot.project.demo.repository.UsersRoleRepository;
 import com.spring.boot.project.demo.service.DbService;
+import com.spring.boot.project.demo.service.ReviewService;
+import com.spring.boot.project.demo.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import java.util.HashSet;
-import java.util.Set;
-import javax.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class InjectController {
     private static final String REVIEWS_CSV_FILE_PATH
             = "src/main/resources/csv/Reviews.csv";
-    private final UsersRoleRepository usersRoleRepository;
+    private final UserService userService;
+    private final ReviewService reviewService;
     private final DbService dbService;
-
-    @PostConstruct
-    public void init() {
-        insertRoles();
-    }
 
     @ApiOperation(value = "Inserting data from data to DB.")
     @GetMapping("/inject-reviews-to-db")
@@ -31,14 +24,10 @@ public class InjectController {
         return "Success inject data to db.";
     }
 
-    private void insertRoles() {
-        Set<UsersRole> roles = new HashSet<>();
-        UsersRole userRole = new UsersRole();
-        userRole.setRoleName(UsersRole.RoleName.USER);
-        roles.add(userRole);
-        UsersRole adminRole = new UsersRole();
-        adminRole.setRoleName(UsersRole.RoleName.ADMIN);
-        roles.add(adminRole);
-        usersRoleRepository.saveAll(roles);
+    @ApiOperation(value = "Inserting test data from data to DB.")
+    @GetMapping("/inject-test-reviews-to-db")
+    public String insertTestReviewsToDb() {
+        dbService.initializeDb("src/test/resources/tests/util/reviews_test.csv");
+        return "Success inject test data to db.";
     }
 }

@@ -10,17 +10,17 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<String> getAllText();
 
     @Query("select r from Review r "
-            + "left join fetch r.amazonUser a "
+            + "left join fetch r.user a "
             + "left join fetch r.product p")
     List<Review> findAll();
 
     @Query("select r from Review r "
             + "left join fetch r.product p "
-            + "where r.amazonUser.userId = ?1")
-    List<Review> findByAmazonUser_UserId(String userId);
+            + "where r.user.userId = ?1")
+    List<Review> findByUser_UserId(String userId);
 
     @Query("select r from Review r "
-            + "left join fetch r.amazonUser a "
+            + "left join fetch r.user a "
             + "where r.product.productId = ?1")
     List<Review> findByProduct_ProductId(String productId);
 }

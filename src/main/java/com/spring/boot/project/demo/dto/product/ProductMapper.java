@@ -5,16 +5,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
-    public ProductDto convertToAmazonUserDto(Product product) {
+    public ProductDto convertToProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setProductId(product.getProductId());
         return productDto;
     }
 
-    public Product convertFromAmazonUserDto(ProductDto productDto) {
+    public Product convertFromProductDto(ProductDto productDto) {
         Product product = new Product();
         product.setProductId(productDto.getProductId());
         return product;
     }
 }
-

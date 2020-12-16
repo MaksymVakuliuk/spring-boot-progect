@@ -9,5 +9,5 @@ public interface ReviewService extends GenericService<Review, Long> {
 
     Set<Review> findReviewsSetOfProduct(String productId);
 
-    Set<Review> findReviewSetOfAmazonUser(String userId);
+    Set<Review> findReviewSetOfUser(String userId);
 }

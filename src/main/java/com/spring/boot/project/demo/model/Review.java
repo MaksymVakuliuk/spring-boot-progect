@@ -21,7 +21,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    private AmazonUser amazonUser;
+    private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
     @Column(name = "helpfulness_numerator", nullable = false)
